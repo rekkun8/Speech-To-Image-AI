@@ -1,130 +1,67 @@
-# Speech-to-Image-Live-Conversion-using-Deep-Learning_Infosys_Internship_Oct2024
+# Speech-to-Image Live Conversion using Deep Learning
 
-The objective of this project is to develop a deep learning model that can convert spoken descriptions into corresponding images in real-time.
-This project is a **Speech-to-Image Generator** that takes audio input, transcribes it using a Whisper model, analyzes the sentiment of the transcription, and generates an image using Stable Diffusion. The application is built using Python and Streamlit.
+This project demonstrates a pipeline that converts **spoken audio input** into **generated images** using state-of-the-art deep learning models. It combines OpenAI's Whisper model for speech-to-text transcription with Stable Diffusion for text-to-image generation, along with sentiment analysis for enhanced text understanding.
 
 ---
 
 ## Features
-- **Audio Recording:** Record audio through your microphone.
-- **Transcription:** Convert recorded audio to text using the Whisper model.
-- **Sentiment Analysis:** Classify the sentiment of the transcribed text.
-- **Image Generation:** Generate an image based on the transcription if the sentiment is positive or neutral.
+
+- **Audio Recording:** Capture live audio input from microphone.
+- **Speech-to-Text:** Transcribe spoken words using a fine-tuned Whisper model.
+- **Sentiment Analysis:** Analyze the emotion or sentiment of the transcribed text.
+- **Text-to-Image:** Generate an image based on the transcription using Stable Diffusion.
+- **GPU Support:** Optimized to use CUDA-enabled GPU if available.
 
 ---
 
-## System Flow
+## Requirements
 
-### Detailed Workflow:
-The application follows these steps:
+- Python 3.8+
+- PyTorch
+- Transformers
+- Diffusers
+- Librosa
+- SoundDevice
+- SciPy
 
-1. **Audio Input:**
-   - The user sets the recording duration.
-   - The application records audio using the `sounddevice` library.
-   - The recorded audio is saved as a `.wav` file.
+Install dependencies with:
 
-2. **Transcription (Whisper Model):**
-   - The saved audio is loaded and preprocessed.
-   - The Whisper model transcribes the audio into text.
+```bash
+pip install torch transformers diffusers librosa sounddevice scipy
 
-3. **Sentiment Analysis:**
-   - The transcribed text is passed to a sentiment analysis pipeline.
-   - The sentiment is classified as either **Positive**, **Neutral**, or **Negative**.
+Usage
+Set model paths in the script (functions.ipynb or your Python script):
 
-4. **Image Generation (Stable Diffusion):**
-   - If the sentiment is **Positive** or **Neutral**, the transcription is passed to the Stable Diffusion pipeline, which generates an image based on the transcription.
-   - If the sentiment is **Negative**, no image is generated, and a warning is displayed to the user.
+python
+Copy
+Edit
+WHISPER_MODEL_PATH = "path/to/your/whisper_finetuned_model"
+SD_MODEL_ID = "runwayml/stable-diffusion-v1-5"  # or your local Stable Diffusion model path
+Run your script to:
 
-5. **Display Results:**
-   - The transcription and sentiment analysis results are displayed.
-   - If the sentiment is **Positive** or **Neutral**, the generated image is also displayed alongside the results.
+Record audio from the microphone
 
----
+Transcribe speech to text
 
-## Flowchart
+Analyze sentiment (optional)
 
+Generate and display/save images from the transcribed text
 
-```mermaid
-graph TD
-    A[Start: User Opens the App] --> B[Set Recording Duration]
-    B --> C[Record Audio Using Microphone]
-    C --> D[Save Audio as WAV File]
-    D --> E[Transcribe Audio Using Whisper]
-    E --> F[Perform Sentiment Analysis]
-    F -->|Positive/Neutral| G[Generate Image Using Stable Diffusion]
-    F -->|Negative| H[Skip Image Generation]
-    G --> I[Display Transcription, Sentiment, and Image]
-    H --> J[Display Transcription and Sentiment Only]
-    I --> K[End]
-    J --> K[End]
-```
+Code Overview
+record_audio(duration, output_path, fs) — Records audio for a given duration and saves it.
 
----
+transcribe_audio(audio_path, processor, model) — Transcribes recorded audio to text.
 
-## Installation
+analyze_sentiment(text, sentiment_pipeline) — Performs sentiment analysis on text.
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/AabidMK/Speech-to-Image-Live-Conversion-using-Deep-Learning_Infosys_Internship_Oct2024.git
-   cd Speech-to-Image-Live-Conversion-using-Deep-Learning_Infosys_Internship_Oct2024
+generate_image(text, pipe) — Generates an image from text prompt.
 
+Notes
+Make sure your Whisper fine-tuned model directory contains all required files (pytorch_model.bin, config.json, preprocessor_config.json, etc.).
 
-2. **Create a virtual environment (optional but recommended):**
-   ```bash
-   python -m venv venv
-   venv\Scripts\activate     # On Windows
-   source venv/bin/activate  # On macOS/Linux
+Stable Diffusion can be loaded either from the Hugging Face Hub or a local directory.
 
-3. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+GPU is recommended for faster inference but not required.
 
----
-
-## How to Run
-
-1. **Start the Streamlit application:**
-   ```bash
-   streamlit run speech_to_image.py
-   ```
-
-2. **Interact with the app:**
-   - Set the recording duration using the slider.
-   - Click **Start Recording 🎙️** to record your audio.
-   - View the transcription and sentiment analysis.
-   - If the sentiment is positive/neutral, view the generated image.
-
----
-
-## Note
-- The application will not generate an image if the sentiment is classified as negative.
-- Ensure your microphone is functioning correctly for the audio recording.
-
----
-
-## Troubleshooting
-1. **CUDA Error:** 
-   - If GPU is not available, the application will default to CPU, which might slow down inference. 
-   - Verify your PyTorch installation supports CUDA.
-
-2. **Model Loading Issues:** 
-   - Confirm the paths for the Whisper and Stable Diffusion models are correct.
-   - Ensure the models are downloaded and accessible.
-
-3. **Dependencies:** 
-   - Use the exact versions of dependencies listed in `requirements.txt` to avoid compatibility issues.
-
----
-
-## Contributing
-Feel free to fork this repository and make contributions. Create a pull request with your changes for review.
-
----
-
-## License
-This project is licensed under the MIT License. See `LICENSE` for details.
-
----
-
-
+License
+This project is open-source under the MIT License.
