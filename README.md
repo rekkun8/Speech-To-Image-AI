@@ -32,20 +32,8 @@ pip install torch transformers diffusers librosa sounddevice scipy
 Usage
 Set model paths in the script (functions.ipynb or your Python script):
 
-python
-Copy
-Edit
 WHISPER_MODEL_PATH = "path/to/your/whisper_finetuned_model"
 SD_MODEL_ID = "runwayml/stable-diffusion-v1-5"  # or your local Stable Diffusion model path
-Run your script to:
-
-Record audio from the microphone
-
-Transcribe speech to text
-
-Analyze sentiment (optional)
-
-Generate and display/save images from the transcribed text
 
 Code Overview
 record_audio(duration, output_path, fs) — Records audio for a given duration and saves it.
@@ -63,5 +51,5 @@ Stable Diffusion can be loaded either from the Hugging Face Hub or a local direc
 
 GPU is recommended for faster inference but not required.
 
-License
+# License
 This project is open-source under the MIT License.
