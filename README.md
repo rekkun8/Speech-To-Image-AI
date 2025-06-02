@@ -51,5 +51,6 @@ Stable Diffusion can be loaded either from the Hugging Face Hub or a local direc
 
 GPU is recommended for faster inference but not required.
 
+```
 # License
 This project is open-source under the MIT License.
